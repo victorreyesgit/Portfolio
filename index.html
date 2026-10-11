@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Visualizing Proximity – by Victor Reyes</title>
+  <meta name="description" content="Interactive visualisations of neighbourhoods in data: fixed-radius balls, k-nearest neighbours and density-calibrated balls. By Victor Reyes.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <h1>Visualizing Proximity <span class="by">&mdash; by Victor Reyes</span></h1>
+
+    <div class="intro">
+      <p class="lead">What does &ldquo;nearby&rdquo; mean in data? Interactive explorers compare a fixed-radius ball, the k nearest neighbours and a density-calibrated ball.</p>
+      <p class="note">The schematic shows the core idea. With the same &epsilon; and the same k, a fixed radius catches many points where data is dense and almost none where it is sparse. The k-NN ball always catches exactly k points, so its size adapts.</p>
+    </div>
+
+    <figure class="demo">
+<svg class="fig" viewBox="0 0 760 416" role="img" aria-label="Two panels with the same epsilon-ball and the same k. In the dense region the epsilon-ball holds 24 points and the 5-nearest-neighbour ball is small. In the sparse region the epsilon-ball holds 1 point and the 5-nearest-neighbour ball is large.">
+<g transform="translate(10,44)">
+<defs><clipPath id="clipA"><rect width="340" height="300"/></clipPath></defs>
+<text class="f-t f-title" x="170.0" y="-14" text-anchor="middle">Dense region</text>
+<rect class="f-frame" width="340" height="300"/>
+<g clip-path="url(#clipA)">
+<circle class="f-knn" cx="170" cy="150" r="24.9"/>
+<circle class="f-eps" cx="170" cy="150" r="62"/>
+</g>
+<circle class="f-pt" cx="159.7" cy="79.6" r="3.6"/>
+<circle class="f-pt-eps" cx="205.0" cy="148.8" r="3.6"/>
+<circle class="f-pt-eps" cx="185.5" cy="185.5" r="3.6"/>
+<circle class="f-pt" cx="107.8" cy="133.3" r="3.6"/>
+<circle class="f-pt-eps" cx="131.0" cy="124.7" r="3.6"/>
+<circle class="f-pt-eps" cx="171.2" cy="125.1" r="3.6"/>
+<circle class="f-ring" cx="171.2" cy="125.1" r="7.5"/>
+<circle class="f-pt" cx="87.5" cy="163.7" r="3.6"/>
+<circle class="f-pt-eps" cx="161.7" cy="107.0" r="3.6"/>
+<circle class="f-pt" cx="236.5" cy="203.7" r="3.6"/>
+<circle class="f-pt" cx="240.2" cy="165.9" r="3.6"/>
+<circle class="f-pt-eps" cx="197.8" cy="180.4" r="3.6"/>
+<circle class="f-pt-eps" cx="150.9" cy="113.4" r="3.6"/>
+<circle class="f-pt-eps" cx="140.6" cy="162.5" r="3.6"/>
+<circle class="f-pt-eps" cx="185.4" cy="160.6" r="3.6"/>
+<circle class="f-ring" cx="185.4" cy="160.6" r="7.5"/>
+<circle class="f-pt" cx="179.3" cy="53.2" r="3.6"/>
+<circle class="f-pt-eps" cx="150.6" cy="136.2" r="3.6"/>
+<circle class="f-ring" cx="150.6" cy="136.2" r="7.5"/>
+<circle class="f-pt-eps" cx="166.9" cy="177.9" r="3.6"/>
+<circle class="f-pt-eps" cx="146.8" cy="170.3" r="3.6"/>
+<circle class="f-pt" cx="250.0" cy="132.5" r="3.6"/>
+<circle class="f-pt-eps" cx="145.4" cy="151.4" r="3.6"/>
+<circle class="f-ring" cx="145.4" cy="151.4" r="7.5"/>
+<circle class="f-pt" cx="238.4" cy="120.6" r="3.6"/>
+<circle class="f-pt" cx="242.9" cy="156.2" r="3.6"/>
+<circle class="f-pt" cx="94.2" cy="109.1" r="3.6"/>
+<circle class="f-pt" cx="87.4" cy="138.6" r="3.6"/>
+<circle class="f-pt-eps" cx="127.1" cy="178.3" r="3.6"/>
+<circle class="f-pt-eps" cx="134.0" cy="187.6" r="3.6"/>
+<circle class="f-pt" cx="260.0" cy="152.4" r="3.6"/>
+<circle class="f-pt" cx="104.3" cy="107.8" r="3.6"/>
+<circle class="f-pt-eps" cx="158.0" cy="124.3" r="3.6"/>
+<circle class="f-pt" cx="267.6" cy="187.0" r="3.6"/>
+<circle class="f-pt-eps" cx="129.3" cy="150.2" r="3.6"/>
+<circle class="f-pt" cx="219.6" cy="106.0" r="3.6"/>
+<circle class="f-pt-eps" cx="192.0" cy="169.8" r="3.6"/>
+<circle class="f-pt" cx="74.8" cy="172.5" r="3.6"/>
+<circle class="f-pt-eps" cx="192.2" cy="120.5" r="3.6"/>
+<circle class="f-pt-eps" cx="179.3" cy="135.3" r="3.6"/>
+<circle class="f-ring" cx="179.3" cy="135.3" r="7.5"/>
+<circle class="f-pt" cx="247.5" cy="182.2" r="3.6"/>
+<circle class="f-pt" cx="202.9" cy="203.8" r="3.6"/>
+<circle class="f-pt-eps" cx="206.1" cy="132.3" r="3.6"/>
+<circle class="f-pt" cx="264.3" cy="165.0" r="3.6"/>
+<circle class="f-pt-eps" cx="216.6" cy="134.3" r="3.6"/>
+<circle class="f-pt" cx="153.8" cy="217.7" r="3.6"/>
+<circle class="f-pt" cx="100.5" cy="235.4" r="3.6"/>
+<circle class="f-pt" cx="129.0" cy="84.4" r="3.6"/>
+<circle class="f-pt-eps" cx="178.1" cy="109.8" r="3.6"/>
+<circle class="f-pt-eps" cx="157.1" cy="177.3" r="3.6"/>
+<circle class="f-pt" cx="232.0" cy="195.7" r="3.6"/>
+<circle class="f-pt" cx="134.0" cy="218.5" r="3.6"/>
+<path class="f-c" d="M164 144L176 156M164 156L176 144"/>
+<text class="f-t f-i" x="179" y="141">c</text>
+<line class="f-rl f-epsl-line" x1="170" y1="150" x2="220.8" y2="185.6"/>
+<text class="f-t f-i f-epsl" x="197.4" y="187.8">&#949;</text>
+<line class="f-rl f-knnl-line" x1="170" y1="150" x2="149.6" y2="135.7"/>
+<text class="f-t f-i f-knnl" x="145.8" y="136.9">r<tspan dy="5" font-size="14">k</tspan></text>
+</g>
+<g transform="translate(410,44)">
+<defs><clipPath id="clipB"><rect width="340" height="300"/></clipPath></defs>
+<text class="f-t f-title" x="170.0" y="-14" text-anchor="middle">Sparse region</text>
+<rect class="f-frame" width="340" height="300"/>
+<g clip-path="url(#clipB)">
+<circle class="f-knn" cx="170" cy="150" r="97.0"/>
+<circle class="f-eps" cx="170" cy="150" r="62"/>
+</g>
+<circle class="f-pt" cx="174.8" cy="244.4" r="3.6"/>
+<circle class="f-ring" cx="174.8" cy="244.4" r="7.5"/>
+<circle class="f-pt" cx="267.5" cy="276.3" r="3.6"/>
+<circle class="f-pt" cx="184.8" cy="250.7" r="3.6"/>
+<circle class="f-pt" cx="260.1" cy="114.1" r="3.6"/>
+<circle class="f-ring" cx="260.1" cy="114.1" r="7.5"/>
+<circle class="f-pt" cx="35.6" cy="116.5" r="3.6"/>
+<circle class="f-pt" cx="89.0" cy="111.1" r="3.6"/>
+<circle class="f-ring" cx="89.0" cy="111.1" r="7.5"/>
+<circle class="f-pt" cx="271.7" cy="148.3" r="3.6"/>
+<circle class="f-pt" cx="246.1" cy="161.0" r="3.6"/>
+<circle class="f-ring" cx="246.1" cy="161.0" r="7.5"/>
+<circle class="f-pt" cx="230.8" cy="249.4" r="3.6"/>
+<circle class="f-pt" cx="52.1" cy="254.0" r="3.6"/>
+<circle class="f-pt" cx="321.7" cy="89.5" r="3.6"/>
+<circle class="f-pt" cx="229.0" cy="276.7" r="3.6"/>
+<circle class="f-pt" cx="255.1" cy="18.7" r="3.6"/>
+<circle class="f-pt-eps" cx="118.1" cy="122.9" r="3.6"/>
+<circle class="f-ring" cx="118.1" cy="122.9" r="7.5"/>
+<path class="f-c" d="M164 144L176 156M164 156L176 144"/>
+<text class="f-t f-i" x="179" y="141">c</text>
+<line class="f-rl f-epsl-line" x1="170" y1="150" x2="220.8" y2="185.6"/>
+<text class="f-t f-i f-epsl" x="197.4" y="187.8">&#949;</text>
+<line class="f-rl f-knnl-line" x1="170" y1="150" x2="90.6" y2="94.4"/>
+<text class="f-t f-i f-knnl" x="116.3" y="116.2">r<tspan dy="5" font-size="14">k</tspan></text>
+</g>
+<text class="f-t" x="180.0" y="378" text-anchor="middle">&#949;-ball holds <tspan class="f-epsl" font-weight="600">24</tspan> points</text><text class="f-t" x="180.0" y="402" text-anchor="middle">5-NN ball has a <tspan class="f-knnl" font-weight="600">small</tspan> radius</text><text class="f-t" x="580.0" y="378" text-anchor="middle">&#949;-ball holds <tspan class="f-epsl" font-weight="600">1</tspan> point</text><text class="f-t" x="580.0" y="402" text-anchor="middle">5-NN ball has a <tspan class="f-knnl" font-weight="600">large</tspan> radius</text>
+</svg>
+      <figcaption>
+        <span class="eps">Dashed orange: &epsilon;-ball</span>
+        <span class="knn">Purple: ball reaching the k-th neighbour (k = 5)</span>
+        <span>&times;: reference point c</span>
+      </figcaption>
+    </figure>
+  </header>
+
+  <main>
+    <h2>Projects</h2>
+
+    <article class="project">
+      <h3>Manifold Neighborhoods Explorer</h3>
+      <div class="text">
+        <p>A 3D curved surface z = A&middot;sin(k&#8321;u)&middot;cos(k&#8322;v) with 100 to 5000 sample points. Compares the &epsilon;-ball, the k nearest neighbours and a closeness-ball whose radius encloses a fixed fraction of the surface area, all using straight-line distance.</p>
+        <p class="tags">Three.js. Sliders for the surface, a live readout at the reference point, photo and video capture.</p>
+      </div>
+      <p class="links">
+        <a class="button" href="https://victorreyesgit.github.io/Manifold-Balls/">Open visualisation</a>
+        <a href="https://github.com/victorreyesgit/Manifold-Balls">Source code</a>
+      </p>
+    </article>
+
+    <article class="project">
+      <h3>&epsilon;-ball vs k-NN on a manifold</h3>
+      <div class="text">
+        <p>A fixed-size &epsilon;-neighbourhood and a k-NN neighbourhood on a curved surface. Shows how the two diverge as the surface curves or the sampling becomes sparse or uneven.</p>
+        <p class="tags">Three.js, runs in the browser.</p>
+      </div>
+      <p class="links">
+        <a class="button" href="https://victorreyesgit.github.io/knn_vs_epsilon_manifold/">Open visualisation</a>
+        <a href="https://github.com/victorreyesgit/knn_vs_epsilon_manifold">Source code</a>
+      </p>
+    </article>
+
+    <article class="project">
+      <h3>&epsilon;-ball vs k-NN on a Gaussian</h3>
+      <div class="text">
+        <p>A 2D normal distribution with its density heatmap and random samples. Move a reference point and compare a fixed-radius &epsilon;-ball with a k-NN ball whose radius is calibrated so it holds the probability (k+&frac12;)/N.</p>
+        <p class="tags">Plain HTML, CSS and JavaScript. Works on phones, with photo and video capture.</p>
+      </div>
+      <p class="links">
+        <a class="button" href="https://victorreyesgit.github.io/knn_vs_epsilon/">Open visualisation</a>
+        <a href="https://github.com/victorreyesgit/knn_vs_epsilon">Source code</a>
+      </p>
+    </article>
+  </main>
+
+  <footer>
+    <a href="https://github.com/victorreyesgit">GitHub profile</a>
+  </footer>
+
+</body>
+</html>
