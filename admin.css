@@ -58,11 +58,16 @@ button:disabled { opacity: .45; cursor: default; }
           padding: 4px 8px; border: 1px dashed var(--line); border-radius: 6px; background: var(--card); flex: none; }
 .handle:active { cursor: grabbing; }
 
-#plist { min-height: 8px; }
-#plist.empty-drop { min-height: 64px; border: 2px dashed var(--line); border-radius: 10px; display: flex;
+.cat-bar { display: flex; align-items: center; gap: 10px; }
+.cat-bar h2 { flex: 1; min-width: 0; margin: 0; padding-bottom: 0; }
+.ed.cat-desc { color: var(--muted); margin-top: 4px; margin-bottom: 8px; }
+.plist { min-height: 8px; }
+.plist.empty-drop { min-height: 64px; margin-top: 8px; border: 2px dashed var(--line); border-radius: 10px; display: flex;
                     align-items: center; justify-content: center; color: var(--muted); }
-#plist.drop-in { border-color: var(--purple); background: rgba(185,128,255,.12); }
-main > button.primary { margin-top: 8px; }
+.plist.drop-in { border-color: var(--purple); background: rgba(185,128,255,.12); }
+.cat > button.primary { margin-top: 12px; }
+.add-cat { margin-top: 28px; }
+.pcol select { width: auto; max-width: 100%; font-size: .85rem; padding: 4px 6px; align-self: flex-start; }
 
 .is-hidden { opacity: .55; }
 .dragging { opacity: .35; }
@@ -70,5 +75,5 @@ main > button.primary { margin-top: 8px; }
 .mark-after { box-shadow: 0 5px 0 0 var(--purple) !important; }
 
 @media (min-width: 820px) {
-  .admin .project { grid-template-columns: 1fr 1.8fr 290px; }
+  .admin .project { grid-template-columns: 1fr 300px; }
 }

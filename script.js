@@ -22,29 +22,42 @@
   document.title = (hero.title || "Portfolio") + (hero.byline ? " " + hero.byline : "");
   $("lead").textContent = hero.lead || "";
   $("note").textContent = hero.note || "";
-  $("projects-title").textContent = d.projectsTitle || "Projects";
 
-  var box = $("projects");
-  var shown = (d.projects || []).filter(function (p) { return p.visible !== false; });
-  if (!shown.length) box.appendChild(el("p", "empty", "Nothing here yet."));
+  // Older files had a flat "projects" list; treat it as one category.
+  var sections = Array.isArray(d.sections) ? d.sections
+    : [{ title: d.projectsTitle || "Projects", description: "", visible: true, projects: d.projects || [] }];
 
-  shown.forEach(function (p) {
-    var row = el("article", "project");
-    row.appendChild(el("h3", "", p.title));
+  var main = $("projects"), any = false;
+  sections.forEach(function (s) {
+    if (s.visible === false) return;
+    var ps = (s.projects || []).filter(function (p) { return p.visible !== false; });
+    if (!ps.length) return;
+    any = true;
 
-    var text = el("div", "text");
-    if (p.description) text.appendChild(el("p", "", p.description));
-    if (p.details) text.appendChild(el("p", "tags", p.details));
-    row.appendChild(text);
+    var sec = el("section", "cat");
+    sec.appendChild(el("h2", "", s.title));
+    if (s.description) sec.appendChild(el("p", "cat-desc", s.description));
 
-    var links = el("p", "links");
-    var open = link("Open visualisation", p.url, "button");
-    var src = link("Source code", p.repo);
-    if (open) links.appendChild(open);
-    if (src) links.appendChild(src);
-    row.appendChild(links);
-    box.appendChild(row);
+    ps.forEach(function (p) {
+      var row = el("article", "project");
+      row.appendChild(el("h3", "", p.title));
+
+      var text = el("div", "text");
+      if (p.description) text.appendChild(el("p", "", p.description));
+      if (p.details) text.appendChild(el("p", "tags", p.details));
+      row.appendChild(text);
+
+      var links = el("p", "links");
+      var open = link("Open visualisation", p.url, "button");
+      var src = link("Source code", p.repo);
+      if (open) links.appendChild(open);
+      if (src) links.appendChild(src);
+      row.appendChild(links);
+      sec.appendChild(row);
+    });
+    main.appendChild(sec);
   });
+  if (!any) main.appendChild(el("p", "empty", "Nothing here yet."));
 
   var f = d.footer || {};
   var fl = $("footer-link");

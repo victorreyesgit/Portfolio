@@ -121,12 +121,21 @@ h2 {
   padding-bottom: 12px;
 }
 
+.cat { margin-top: 28px; }
+.cat:first-child { margin-top: 0; }
+.cat-desc { color: var(--muted); margin: -4px 0 12px; max-width: 46em; }
+
+/* project: title on top, description below, links on the right */
 .project {
   display: grid;
-  gap: 14px;
+  gap: 10px 32px;
   padding: 28px 0;
   border-top: 1px solid var(--line);
+  grid-template-areas: "title" "text" "links";
 }
+.project h3 { grid-area: title; }
+.project .text { grid-area: text; }
+.project .links, .project .pcol { grid-area: links; }
 
 h3 {
   font-family: var(--serif);
@@ -167,6 +176,6 @@ footer {
 /* ---------- wider screens ---------- */
 @media (min-width: 820px) {
   .hero { grid-template-columns: 1fr 1.5fr; gap: 28px 44px; padding-top: 64px; align-items: center; }
-  .project { grid-template-columns: 1fr 1.8fr auto; gap: 32px; align-items: start; }
-  .links { flex-direction: column; align-items: flex-start; }
+  .project { grid-template-columns: 1fr auto; grid-template-areas: "title links" "text links"; align-items: start; }
+  .project .links { flex-direction: column; align-items: flex-start; align-self: center; }
 }

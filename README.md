@@ -4,7 +4,7 @@ Static page (plain HTML/CSS/JS, no build step). The text content now lives in `p
 
 ## Files
 - `index.html`, `style.css`, `script.js`: the public page
-- `portfolio.js`: all editable content (title, intro, projects, footer link)
+- `portfolio.js`: all editable content (title, intro, categories with their projects, footer link)
 - `admin.html`, `admin.js`, `admin.css`: editing page, opened from the **⚙ Admin** button at the top right of the site
 - The schematic figure (the two dense/sparse panels) stays inside `index.html`; the admin page cannot edit it.
 
@@ -22,9 +22,11 @@ Pick one:
 
 ## 3. Use the admin page
 1. Open the admin (button on the site), paste the token if asked, **Save token and load**.
-2. Click any text to edit it in place: title, "by" text, intro sentence, note, section title, each project's name, description, small grey line, URLs, footer link.
-3. Reorder projects by dragging **⠿** (or **↑ ↓** on touch screens); **Hide / Show** and **Delete** per project; **+ Add project** at the end.
-4. **Save to GitHub**. The site updates about a minute later. If it says the file changed on GitHub meanwhile, click **Reload from GitHub** and redo the edit; nothing is overwritten.
+2. Click any text to edit it in place: title, "by" text, intro sentence, note, category names and descriptions, each project's name, description, links, footer link.
+3. **Categories** (Visualisations, Code, Replicability…): **+ Add category** at the bottom; each one can be renamed, reordered (drag **⠿** or **↑ ↓**), hidden or deleted. A category with no visible projects is not shown on the public site.
+4. **Projects** live inside a category: **+ Add project** under it. Drag **⠿** to reorder, including into another category (or use the dropdown on the project). **Hide / Show** and **Delete** per project.
+5. On the public page each project shows the title on top, the description below and the links on the right. The "Source" link and the small grey line are optional.
+6. **Save to GitHub**. The site updates about a minute later. If it says the file changed on GitHub meanwhile, click **Reload from GitHub** and redo the edit; nothing is overwritten.
 
 ## Editing by hand
 Open `portfolio.js` on github.com and edit. Keep valid JSON (double quotes, no trailing commas) and keep the line `window.PORTFOLIO = {`.

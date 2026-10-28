@@ -57,8 +57,12 @@ async function load() {
     try { parsed = JSON.parse(txt.slice(a, b + 1)); }
     catch (e) { throw new Error(FILE + " is not valid JSON (check quotes and trailing commas). Fix it on github.com, then reload. " + e.message); }
     parsed.hero = parsed.hero || {};
-    parsed.projects = parsed.projects || [];
     parsed.footer = parsed.footer || {};
+    // Older files had a flat "projects" list; turn it into one category.
+    if (!Array.isArray(parsed.sections)) {
+      parsed.sections = [{ title: parsed.projectsTitle || "Projects", description: "", visible: true, projects: parsed.projects || [] }];
+    }
+    parsed.sections.forEach(function (s) { s.projects = s.projects || []; });
     data = parsed; sha = j.sha; prefix = txt.slice(0, m.index);
     setDirty(false); render(); $("saveBar").hidden = false;
     say("Loaded " + FILE + " from " + REPO + " (" + BRANCH + ").", "ok");
@@ -69,12 +73,14 @@ function clean() {
   var h = data.hero, f = data.footer;
   var out = {
     hero: { title: h.title || "", byline: h.byline || "", lead: h.lead || "", note: h.note || "" },
-    projectsTitle: data.projectsTitle || "Projects",
-    projects: data.projects.map(function (p) {
-      var o = { title: p.title || "", description: p.description || "", details: p.details || "",
-                url: p.url || "", visible: p.visible !== false };
-      if (p.repo) o.repo = p.repo;
-      return o;
+    sections: data.sections.map(function (s) {
+      return { title: s.title || "", description: s.description || "", visible: s.visible !== false,
+        projects: s.projects.map(function (p) {
+          var o = { title: p.title || "", description: p.description || "", details: p.details || "",
+                    url: p.url || "", visible: p.visible !== false };
+          if (p.repo) o.repo = p.repo;
+          return o;
+        }) };
     }),
     footer: { text: f.text || "", url: f.url || "" }
   };
@@ -137,7 +143,7 @@ function dragSource(node, handle, info) {
     e.stopPropagation();
     drag = info; target = null;
     e.dataTransfer.effectAllowed = "move";
-    e.dataTransfer.setData("text/plain", "project");
+    e.dataTransfer.setData("text/plain", info.type);
     node.classList.add("dragging");
   });
   node.addEventListener("dragend", function () {
@@ -148,11 +154,19 @@ document.addEventListener("mouseup", function () {
   document.querySelectorAll("[draggable=true]").forEach(function (n) { n.draggable = false; });
 });
 function dropProject() {
-  if (!drag || target === null) return;
-  var item = data.projects.splice(drag.pi, 1)[0];
-  var idx = target;
-  if (idx > drag.pi) idx--;
-  data.projects.splice(idx, 0, item);
+  if (!drag || drag.type !== "project" || !target) return;
+  var item = data.sections[drag.si].projects.splice(drag.pi, 1)[0];
+  var idx = target.index;
+  if (target.si === drag.si && idx > drag.pi) idx--;
+  data.sections[target.si].projects.splice(idx, 0, item);
+  drag = null; target = null; changed();
+}
+function dropSection() {
+  if (!drag || drag.type !== "section" || !target) return;
+  var item = data.sections.splice(drag.si, 1)[0];
+  var idx = target.index;
+  if (idx > drag.si) idx--;
+  data.sections.splice(idx, 0, item);
   drag = null; target = null; changed();
 }
 function isAfter(e, node) {
@@ -174,7 +188,7 @@ function heroBlock() {
   return w;
 }
 
-function projectBlock(p, pi) {
+function projectBlock(s, si, p, pi) {
   var row = el("article", "project" + (p.visible === false ? " is-hidden" : ""));
   var h3 = el("h3");
   h3.append(ed("input", p.title, function (v) { p.title = v; }, "Project name"));
@@ -182,49 +196,104 @@ function projectBlock(p, pi) {
   var text = el("div", "text");
   text.append(
     ed("textarea", p.description, function (v) { p.description = v; }, "Description"),
-    ed("input", p.details, function (v) { p.details = v; }, "Small grey line (technologies, features…)", "tags"));
+    ed("input", p.details, function (v) { p.details = v; }, "Small grey line (optional)", "tags"));
 
   var col = el("div", "pcol"), tools = el("div", "tools"), handle = el("span", "handle", "⠿");
-  handle.title = "Drag to reorder";
+  handle.title = "Drag to reorder (also into another category)";
+  var sel = el("select"); sel.setAttribute("aria-label", "Move to category");
+  data.sections.forEach(function (o, oi) {
+    var op = el("option", "", "→ " + (o.title || "(untitled)")); op.value = oi; if (oi === si) op.selected = true; sel.append(op);
+  });
+  sel.onchange = function () { data.sections[+sel.value].projects.push(s.projects.splice(pi, 1)[0]); changed(); };
   tools.append(handle,
-    btn("↑", function () { move(data.projects, pi, -1); }, "sm"),
-    btn("↓", function () { move(data.projects, pi, 1); }, "sm"),
+    btn("↑", function () { move(s.projects, pi, -1); }, "sm"),
+    btn("↓", function () { move(s.projects, pi, 1); }, "sm"),
     btn(p.visible === false ? "Show" : "Hide", function () { p.visible = p.visible === false; changed(); }, "sm"),
     btn("Delete", function () {
-      if (confirm("Delete project “" + p.title + "”?")) { data.projects.splice(pi, 1); changed(); }
+      if (confirm("Delete project “" + p.title + "”?")) { s.projects.splice(pi, 1); changed(); }
     }, "sm danger"));
   col.append(
-    line("Open", p.url, function (v) { p.url = v.trim(); }, "Live URL (https://…)"),
+    line("Open", p.url, function (v) { p.url = v.trim(); }, "Link (https://…)"),
     line("Source", p.repo, function (v) { p.repo = v.trim(); }, "Source repo URL (optional)"),
-    tools);
+    tools, sel);
   row.append(h3, text, col);
 
-  dragSource(row, handle, { pi: pi });
+  dragSource(row, handle, { type: "project", si: si, pi: pi });
   row.addEventListener("dragover", function (e) {
-    if (!drag) return;
+    if (!drag || drag.type !== "project") return;
     e.preventDefault(); e.stopPropagation(); clearMarks();
     var after = isAfter(e, row);
     row.classList.add(after ? "mark-after" : "mark-before");
-    target = pi + (after ? 1 : 0);
+    target = { si: si, index: pi + (after ? 1 : 0) };
   });
   row.addEventListener("drop", function (e) {
-    if (!drag) return;
+    if (!drag || drag.type !== "project") return;
     e.preventDefault(); e.stopPropagation(); dropProject();
   });
   return row;
 }
 
-function mainBlock() {
-  var m = el("main"), h2 = el("h2");
-  h2.append(ed("input", data.projectsTitle || "Projects", function (v) { data.projectsTitle = v; }, "Section title"));
-  var list = el("div"); list.id = "plist";
-  data.projects.forEach(function (p, pi) { list.append(projectBlock(p, pi)); });
-  if (!data.projects.length) {
-    list.classList.add("empty-drop"); list.textContent = "No projects yet. Use + Add project.";
+function sectionBlock(s, si) {
+  var sec = el("section", "cat" + (s.visible === false ? " is-hidden" : ""));
+
+  var bar = el("div", "cat-bar"), handle = el("span", "handle", "⠿"), h2 = el("h2");
+  handle.title = "Drag to reorder category";
+  h2.append(ed("input", s.title, function (v) { s.title = v; }, "Category name (e.g. Visualisations)"));
+  var tools = el("div", "tools");
+  tools.append(
+    btn("↑", function () { move(data.sections, si, -1); }, "sm"),
+    btn("↓", function () { move(data.sections, si, 1); }, "sm"),
+    btn(s.visible === false ? "Show" : "Hide", function () { s.visible = s.visible === false; changed(); }, "sm"),
+    btn("Delete", function () {
+      if (confirm("Delete category “" + s.title + "” and its " + s.projects.length + " project(s)?")) {
+        data.sections.splice(si, 1); changed(); }
+    }, "sm danger"));
+  bar.append(handle, h2, tools);
+
+  var list = el("div", "plist");
+  s.projects.forEach(function (p, pi) { list.append(projectBlock(s, si, p, pi)); });
+  if (!s.projects.length) {
+    list.classList.add("empty-drop"); list.textContent = "No projects yet. Drop one here or use + Add project.";
+    list.addEventListener("dragover", function (e) {
+      if (!drag || drag.type !== "project") return;
+      e.preventDefault(); e.stopPropagation(); clearMarks();
+      list.classList.add("drop-in"); target = { si: si, index: 0 };
+    });
+    list.addEventListener("drop", function (e) {
+      if (!drag || drag.type !== "project") return;
+      e.preventDefault(); e.stopPropagation(); dropProject();
+    });
   }
-  m.append(h2, list, btn("+ Add project", function () {
-    data.projects.push({ title: "New project", description: "", details: "", url: "", repo: "", visible: true }); changed();
-  }, "primary"));
+
+  sec.append(bar,
+    ed("input", s.description, function (v) { s.description = v; }, "Short description of the category (optional)", "cat-desc"),
+    list,
+    btn("+ Add project", function () {
+      s.projects.push({ title: "New project", description: "", details: "", url: "", repo: "", visible: true }); changed();
+    }, "primary"));
+
+  dragSource(sec, handle, { type: "section", si: si });
+  sec.addEventListener("dragover", function (e) {
+    if (!drag || drag.type !== "section") return;
+    e.preventDefault(); clearMarks();
+    var after = isAfter(e, sec);
+    sec.classList.add(after ? "mark-after" : "mark-before");
+    target = { index: si + (after ? 1 : 0) };
+  });
+  sec.addEventListener("drop", function (e) {
+    if (!drag || drag.type !== "section") return;
+    e.preventDefault(); dropSection();
+  });
+  return sec;
+}
+
+function mainBlock() {
+  var m = el("main");
+  data.sections.forEach(function (s, si) { m.append(sectionBlock(s, si)); });
+  m.append(btn("+ Add category", function () {
+    var t = prompt("Category name? (e.g. Visualisations, Code, Replicability)"); if (!t) return;
+    data.sections.push({ title: t, description: "", visible: true, projects: [] }); changed();
+  }, "primary add-cat"));
   return m;
 }
 
