@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://api.github.com; base-uri 'none'; form-action 'none'">
+  <title>Portfolio admin</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body class="admin">
+  <a class="admin-link" href="index.html">← View site</a>
+
+  <div class="admin-top">
+    <p class="mode">Editing mode: click any text to edit it, drag ⠿ to reorder projects.</p>
+    <div class="card" id="tokenBox">
+      <div id="tokenNew">
+        <label for="tok">GitHub fine-grained token (needs Contents read/write on the Portfolio repo)</label>
+        <input id="tok" type="password" autocomplete="off" placeholder="github_pat_...">
+        <div class="bar"><button class="primary" id="saveTok">Save token and load</button></div>
+      </div>
+      <div id="tokenHave" hidden>
+        <span class="hint">A token is stored on this device only.</span>
+        <div class="bar">
+          <button id="reload">Reload from GitHub</button>
+          <button class="danger" id="forget">Forget token</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="status" role="status">Paste your token to start.</div>
+  <div id="editor"></div>
+
+  <div class="savebar" id="saveBar" hidden>
+    <div class="savebar-in">
+      <button class="primary" id="save" disabled>Save to GitHub</button>
+      <span class="hint">The public site updates about a minute after saving.</span>
+    </div>
+  </div>
+  <script src="admin.js"></script>
+</body>
+</html>

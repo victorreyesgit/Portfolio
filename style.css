@@ -26,6 +26,16 @@ a { color: var(--ink); text-underline-offset: 3px; }
 a:hover { color: var(--orange-text); }
 a:focus-visible { outline: 3px solid var(--purple); outline-offset: 3px; }
 
+/* button to the admin page */
+body { position: relative; }
+.admin-link {
+  position: absolute; top: 14px; right: 20px;
+  padding: 5px 14px; border: 1.5px solid var(--ink); border-radius: 999px;
+  background: var(--card); text-decoration: none; font-weight: 600; font-size: 0.85rem;
+}
+.admin-link:hover { background: var(--ink); color: #fff; }
+.empty { color: var(--muted); padding: 24px 0; }
+
 .hero, main, footer {
   max-width: 1080px;
   margin: 0 auto;

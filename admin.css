@@ -1,0 +1,74 @@
+/* Admin-only styles. Loaded after style.css, so the admin page reuses the public look. */
+[hidden] { display: none !important; }
+
+.admin-top { max-width: 1080px; margin: 0 auto; padding: 52px 20px 0; }
+.mode { margin: 0 0 8px; color: var(--muted); font-size: .9rem; }
+.admin footer { border-top: 1px solid var(--line); }
+.admin main { padding-bottom: 24px; }
+.admin .hero { padding-top: 24px; }
+
+/* ---------- controls ---------- */
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 14px; margin: 14px 0; }
+label { display: block; font-size: .85rem; color: var(--muted); margin: 8px 0 0; }
+input, textarea, select { width: 100%; font: inherit; padding: 8px 10px; border: 1px solid var(--line);
+                          border-radius: 6px; background: #fff; color: var(--ink); }
+.bar { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; align-items: center; }
+button { font: inherit; padding: 8px 14px; border-radius: 6px; border: 1px solid var(--ink); background: #fff;
+         color: var(--ink); cursor: pointer; }
+button.primary { background: var(--ink); color: #fff; font-weight: 600; }
+button.danger { color: #b3261e; border-color: #b3261e; }
+button.sm { padding: 3px 10px; font-size: .85rem; }
+button:disabled { opacity: .45; cursor: default; }
+.hint { color: var(--muted); font-size: .9rem; }
+#status { position: sticky; top: 0; z-index: 5; padding: 10px 14px; margin: 14px auto; border-radius: 6px;
+          width: min(1040px, calc(100% - 40px)); background: var(--card); border: 1px solid var(--line); }
+#status.ok { border-color: #1d6b3a; color: #1d6b3a; }
+#status.err { border-color: #b3261e; color: #b3261e; }
+.savebar { position: sticky; bottom: 0; z-index: 6; background: rgba(237,241,245,.95); border-top: 1px solid var(--line);
+           padding: 12px 0; backdrop-filter: blur(4px); }
+.savebar-in { max-width: 1080px; margin: 0 auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+
+/* ---------- in-place editing: inputs that look like the text they edit ---------- */
+.ed { font: inherit; color: inherit; letter-spacing: inherit; line-height: inherit; background: transparent;
+      border: 1px dashed transparent; border-radius: 6px; padding: 2px 6px; margin: 0 -6px;
+      width: calc(100% + 12px); min-height: 0; resize: none; overflow: hidden; }
+.ed:hover { border-color: var(--line); }
+.ed:focus { border-color: var(--purple); background: #fff; outline: none; }
+.ed::placeholder { color: var(--muted); opacity: .6; font-weight: 400; }
+
+.admin h1 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 .35em; }
+.admin h1 .ed { flex: 1 1 8em; width: auto; margin: 0; }
+.admin h1 .ed.by { font-weight: 400; color: var(--muted); }
+.ed.lead { font-family: var(--serif); font-size: 1.3rem; line-height: 1.45; margin: 0 -6px 16px; }
+.ed.note { color: var(--muted); }
+.admin h2 .ed, .admin h3 .ed { margin: 0; width: 100%; }
+.admin h3 .ed { font-weight: 600; }
+.admin .text textarea.ed { display: block; margin-bottom: 8px; max-width: 46em; }
+.admin .text .ed.tags { color: var(--muted); font-size: .92rem; max-width: 46em; }
+
+.fig-ph { min-height: 220px; display: flex; align-items: center; justify-content: center; text-align: center;
+          padding: 20px; color: var(--muted); border: 2px dashed var(--line); border-radius: 6px; background: var(--card); }
+
+.pcol { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.fl { display: flex; align-items: center; gap: 8px; font-size: .92rem; }
+.fl-l { flex: none; width: 52px; font-weight: 700; color: var(--orange-text); }
+.fl .ed { flex: 1; width: auto; margin: 0; }
+.tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 4px; }
+.handle { cursor: grab; user-select: none; color: var(--muted); font-size: 1.3rem; line-height: 1;
+          padding: 4px 8px; border: 1px dashed var(--line); border-radius: 6px; background: var(--card); flex: none; }
+.handle:active { cursor: grabbing; }
+
+#plist { min-height: 8px; }
+#plist.empty-drop { min-height: 64px; border: 2px dashed var(--line); border-radius: 10px; display: flex;
+                    align-items: center; justify-content: center; color: var(--muted); }
+#plist.drop-in { border-color: var(--purple); background: rgba(185,128,255,.12); }
+main > button.primary { margin-top: 8px; }
+
+.is-hidden { opacity: .55; }
+.dragging { opacity: .35; }
+.mark-before { box-shadow: 0 -5px 0 0 var(--purple) !important; }
+.mark-after { box-shadow: 0 5px 0 0 var(--purple) !important; }
+
+@media (min-width: 820px) {
+  .admin .project { grid-template-columns: 1fr 1.8fr 290px; }
+}

@@ -8,13 +8,14 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <a class="admin-link" href="admin.html">⚙ Admin</a>
 
   <header class="hero">
-    <h1>Visualizing Proximity <span class="by">&mdash; by Victor Reyes</span></h1>
+    <h1><span id="title">Visualizing Proximity</span><span class="by" id="byline"></span></h1>
 
     <div class="intro">
-      <p class="lead">What does &ldquo;nearby&rdquo; mean in data? Interactive explorers compare a fixed-radius ball, the k nearest neighbours and a density-calibrated ball.</p>
-      <p class="note">The schematic shows the core idea. With the same &epsilon; and the same k, a fixed radius catches many points where data is dense and almost none where it is sparse. The k-NN ball always catches exactly k points, so its size adapts.</p>
+      <p class="lead" id="lead"></p>
+      <p class="note" id="note"></p>
     </div>
 
     <figure class="demo">
@@ -132,48 +133,15 @@
   </header>
 
   <main>
-    <h2>Projects</h2>
-
-    <article class="project">
-      <h3>Manifold Neighborhoods Explorer</h3>
-      <div class="text">
-        <p>A 3D curved surface z = A&middot;sin(k&#8321;u)&middot;cos(k&#8322;v) with 100 to 5000 sample points. Compares the &epsilon;-ball, the k nearest neighbours and a closeness-ball whose radius encloses a fixed fraction of the surface area, all using straight-line distance.</p>
-        <p class="tags">Three.js. Sliders for the surface, a live readout at the reference point, photo and video capture.</p>
-      </div>
-      <p class="links">
-        <a class="button" href="https://victorreyesgit.github.io/Manifold-Balls/">Open visualisation</a>
-        <a href="https://github.com/victorreyesgit/Manifold-Balls">Source code</a>
-      </p>
-    </article>
-
-    <article class="project">
-      <h3>&epsilon;-ball vs k-NN on a Manifold</h3>
-      <div class="text">
-        <p>A fixed-size &epsilon;-neighbourhood and a k-NN neighbourhood on a curved surface. Shows how the two diverge as the surface curves or the sampling becomes sparse or uneven.</p>
-        <p class="tags">Three.js, runs in the browser.</p>
-      </div>
-      <p class="links">
-        <a class="button" href="https://victorreyesgit.github.io/knn_vs_epsilon_manifold/">Open visualisation</a>
-        <a href="https://github.com/victorreyesgit/knn_vs_epsilon_manifold">Source code</a>
-      </p>
-    </article>
-
-    <article class="project">
-      <h3>&epsilon;-ball vs k-NN on a Gaussian</h3>
-      <div class="text">
-        <p>A 2D normal distribution with its density heatmap and random samples. Move a reference point and compare a fixed-radius &epsilon;-ball with a k-NN ball whose radius is calibrated so it holds the probability (k+&frac12;)/N.</p>
-        <p class="tags">Plain HTML, CSS and JavaScript. Works on phones, with photo and video capture.</p>
-      </div>
-      <p class="links">
-        <a class="button" href="https://victorreyesgit.github.io/knn_vs_epsilon/">Open visualisation</a>
-        <a href="https://github.com/victorreyesgit/knn_vs_epsilon">Source code</a>
-      </p>
-    </article>
+    <h2 id="projects-title">Projects</h2>
+    <div id="projects"></div>
   </main>
 
   <footer>
-    <a href="https://github.com/victorreyesgit">GitHub profile</a>
+    <a id="footer-link" href="https://github.com/victorreyesgit">GitHub profile</a>
   </footer>
 
+  <script src="portfolio.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
