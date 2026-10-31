@@ -33,23 +33,37 @@ window.PORTFOLIO = {
           "description": "A 3D curved surface z = A·sin(k₁u)·cos(k₂v) with 100 to 5000 sample points. Compares the ε-ball, the k nearest neighbours and a closeness-ball whose radius encloses a fixed fraction of the surface area, all using straight-line distance.",
           "details": "Three.js. Sliders for the surface, a live readout at the reference point, photo and video capture.",
           "url": "https://victorreyesgit.github.io/Manifold-Balls/",
-          "repo": "https://github.com/victorreyesgit/Manifold-Balls",
-          "visible": true
+          "visible": true,
+          "repo": "https://github.com/victorreyesgit/Manifold-Balls"
         },
         {
           "title": "ε-ball vs k-NN on a Manifold",
           "description": "A fixed-size ε-neighbourhood and a k-NN neighbourhood on a curved surface. Shows how the two diverge as the surface curves or the sampling becomes sparse or uneven.",
           "details": "Three.js, runs in the browser.",
           "url": "https://victorreyesgit.github.io/knn_vs_epsilon_manifold/",
-          "repo": "https://github.com/victorreyesgit/knn_vs_epsilon_manifold",
-          "visible": true
+          "visible": true,
+          "repo": "https://github.com/victorreyesgit/knn_vs_epsilon_manifold"
         },
         {
           "title": "ε-ball vs k-NN on a Gaussian",
           "description": "A 2D normal distribution with its density heatmap and random samples. Move a reference point and compare a fixed-radius ε-ball with a k-NN ball whose radius is calibrated so it holds the probability (k+½)/N.",
           "details": "Plain HTML, CSS and JavaScript. Works on phones, with photo and video capture.",
           "url": "https://victorreyesgit.github.io/knn_vs_epsilon/",
-          "repo": "https://github.com/victorreyesgit/knn_vs_epsilon",
+          "visible": true,
+          "repo": "https://github.com/victorreyesgit/knn_vs_epsilon"
+        }
+      ]
+    },
+    {
+      "title": "Replicability",
+      "description": "",
+      "visible": true,
+      "projects": [
+        {
+          "title": "Closeness",
+          "description": "",
+          "details": "",
+          "url": "",
           "visible": true
         }
       ]
