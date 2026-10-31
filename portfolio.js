@@ -63,7 +63,7 @@ window.PORTFOLIO = {
           "title": "Closeness",
           "description": "",
           "details": "",
-          "url": "",
+          "url": "https://victorreyesgit.github.io/knn_vs_epsilon_manifold/",
           "visible": true
         }
       ]
