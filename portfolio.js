@@ -51,6 +51,13 @@ window.PORTFOLIO = {
           "url": "https://victorreyesgit.github.io/knn_vs_epsilon/",
           "visible": true,
           "repo": "https://github.com/victorreyesgit/knn_vs_epsilon"
+        },
+        {
+          "title": "Hubness Visualisation",
+          "description": "",
+          "details": "",
+          "url": "https://victorreyesgit.github.io/Hubness_visualisation/",
+          "visible": true
         }
       ]
     },
